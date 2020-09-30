@@ -115,7 +115,7 @@ class App extends Component {
                     <div className='filter-card'>
                         <MultiList 
                             componentId="filtroTitulo" 
-                            dataField="titulo.keyword" 
+                            dataField="title.keyword" 
                             title="Título" 
                             placeholder="Procurar pelo título"
                             showSearch={true}
@@ -123,7 +123,6 @@ class App extends Component {
                             showCheckbox={true}
                             filterLabel="Título"
                             
-                            customQuery={this.customQuery}
                             innerClass={{
                                 title: 'search-title'
                             }}
@@ -135,7 +134,7 @@ class App extends Component {
                                     width: "100%"
                                 }}>
                                     <span>
-                                        {label.length > 14 ? label.substring(0,14)+'...':label}
+                                        {label}
                                     </span>
                                     
                                     <span style={{

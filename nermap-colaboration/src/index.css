@@ -64,12 +64,12 @@ code {
 
 .filters-container{
   flex-direction: column;
-  width: 20vw;
+  width: 30vw;
   padding-right: 30px;
 }
 .cards-container{
   padding: 0 10px 10px 10px;
-  width: 80vw;
+  width: 70vw;
 }
 
 .filter-card{
