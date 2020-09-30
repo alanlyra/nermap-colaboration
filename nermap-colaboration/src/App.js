@@ -58,6 +58,8 @@ class App extends Component {
                 body = body.split('"match_all":{}').join(`"query_string":{"fields":["sentence.english"],"query":"${this.termosFuturo}"}`)
 
                 body = body.split(',"order":{"_count":"desc"}').join('')
+
+                body = body.split('"query":{"bool":{"must":[').join(`"query":{"bool":{"must":[{"query_string":{"fields": ["sentence.english"], "query":"${this.termosFuturo}"}},`)
                 return {
                     ...props,
                     body
@@ -87,7 +89,24 @@ class App extends Component {
                             innerClass={{
                                 title: 'search-title',
                             }}
-                            customQuery={this.customQuery}
+                            // customQuery={this.customQuery}
+                            transformData={(data) => {
+                                let newData = []
+
+                                let pivot = []
+
+                                for(let i = 0; i < data.length; i++){
+                                    pivot[data[i].key] = data[i].doc_count
+                                }
+                                    
+                                for(let i = 2010; i <= 2020; i++){
+                                    newData[i] = {
+                                        key: i,
+                                        doc_count: pivot[i] === undefined ? 0:pivot[i]
+                                    }
+                                }
+                                return newData
+                            }}
                             react={{
                                 and: ['filtroTitulo', 'results', 'DateSensor'],
                             }}
@@ -103,6 +122,7 @@ class App extends Component {
                             showCount={false}
                             showCheckbox={true}
                             filterLabel="Título"
+                            
                             customQuery={this.customQuery}
                             innerClass={{
                                 title: 'search-title'
@@ -189,7 +209,6 @@ class App extends Component {
                                             const getContent = () => {
                                                 let content
 
-                                                console.log(item)
                                                 if(item.highlight['sentence.english']){
                                                     content = item.highlight['sentence.english']
                                                 }
