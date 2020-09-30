@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { ReactiveBase, DataSearch, SelectedFilters, ReactiveList, ResultList, MultiList, DateRange} from '@appbaseio/reactivesearch';
-import dateFnsFormat from "date-fns/format";
-import dateFnsParse from "date-fns/parse";
-import { DateUtils } from "react-day-picker";
-
+import { ReactiveBase, SelectedFilters, ReactiveList, ResultList, MultiList} from '@appbaseio/reactivesearch';
 
 class App extends Component {
 
@@ -42,26 +38,6 @@ class App extends Component {
     }
 
     render() {
-        const formatDate = (date, format, locale) => {
-            return dateFnsFormat(date, format, { locale })
-        }
-        
-        const parseDate = (str, format, locale) => {
-            const dateSplit = str.split('/')
-            const newDateString = `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
-            const newDate = new Date(newDateString)
-            newDate.setDate(newDate.getDate() + 1)
-
-            const parsed = dateFnsParse(new Date(newDate), format, { locale });
-
-            if (DateUtils.isDate(parsed)) {
-              return parsed;
-            }
-            if (DateUtils.isDate(newDate)) {
-                return newDate;
-            }
-            return undefined;
-        }
 
         return (
            
@@ -105,7 +81,6 @@ class App extends Component {
                             dataField="age.keyword" 
                             title="Ano" 
                             showSearch={true}
-                            placeholder="Procurar pela Ano"
                             innerClass={{
                                 title: 'search-title',
                             }}
@@ -178,7 +153,7 @@ class App extends Component {
                             const prevButton = document.getElementsByClassName('css-9pslbi-Button e165j7gc0')
                             if(prevButton.length > 0){
                                 for(let i = 0; i < prevButton.length; i++){
-                                    if(prevButton[i].text == "Prev"){
+                                    if(prevButton[i].text === "Prev"){
                                         prevButton[i].text = "Anterior"
                                     }
                                 }
@@ -187,7 +162,7 @@ class App extends Component {
                             const nextButton = document.getElementsByClassName('css-iioxla-Button e165j7gc0')
                             if(nextButton.length > 0){
                                 for(let i = 0; i < nextButton.length; i++){
-                                    if(nextButton[i].text == "Next"){
+                                    if(nextButton[i].text === "Next"){
                                         nextButton[i].text = "Próxima"
                                     }
                                 }
