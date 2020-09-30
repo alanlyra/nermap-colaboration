@@ -7,6 +7,8 @@ class App extends Component {
     url = 'http://localhost:9200'
     searchStream = []
 
+    termosFuturo = "(year OR decade OR 20??) AND NOT (201? OR 200?)"
+
     customQuery = () => {
         return {
             "query": {
@@ -15,7 +17,7 @@ class App extends Component {
                     {
                       "query_string": {
                         "fields": ["sentence.english"],
-                        "query": `year OR month OR decade`,
+                        "query": `${this.termosFuturo}`,
                         "_name": "padrao"
                       }
                     }
@@ -53,8 +55,9 @@ class App extends Component {
                 
                 let body = props.body.split(`"}\n{"query"`).join(`"}\n{"highlight":{"pre_tags":["<mark>"],"post_tags":["</mark>"],"fields":{"sentence.english":{}},"number_of_fragments":0},"track_total_hits": true,"query"`)
 
-                const termosFuturo = "(year OR decade OR 20??) AND NOT (201? OR 200?)"
-                body = body.split('"match_all":{}').join(`"query_string":{"fields":["sentence.english"],"query":"${termosFuturo}"}`)
+                body = body.split('"match_all":{}').join(`"query_string":{"fields":["sentence.english"],"query":"${this.termosFuturo}"}`)
+
+                body = body.split(',"order":{"_count":"desc"}').join('')
                 return {
                     ...props,
                     body
@@ -84,6 +87,7 @@ class App extends Component {
                             innerClass={{
                                 title: 'search-title',
                             }}
+                            customQuery={this.customQuery}
                             react={{
                                 and: ['filtroTitulo', 'results', 'DateSensor'],
                             }}
@@ -99,6 +103,7 @@ class App extends Component {
                             showCount={false}
                             showCheckbox={true}
                             filterLabel="Título"
+                            customQuery={this.customQuery}
                             innerClass={{
                                 title: 'search-title'
                             }}
@@ -131,7 +136,8 @@ class App extends Component {
                 <div className='cards-container'>
                     <ReactiveList
                         componentId="results"
-                        dataField="meta.title"
+                        dataField="sentence.english"
+                        customQuery={this.customQuery}
                         size={10}
                         pagination={true}
                         paginationAt="both"
