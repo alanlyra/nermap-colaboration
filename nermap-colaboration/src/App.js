@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ReactiveBase, SelectedFilters, ReactiveList, ResultList, MultiList} from '@appbaseio/reactivesearch';
+import { ReactiveBase, SelectedFilters, ReactiveList, ResultList, SingleList} from '@appbaseio/reactivesearch';
 
 class App extends Component {
 
@@ -80,7 +80,7 @@ class App extends Component {
             <div className='results-container'>
                 <div className='filters-container'>
                     <div className='filter-card'>
-                        <MultiList 
+                        <SingleList 
                             componentId="Ano" 
                             placeholder="Selecione Ano"
                             dataField="age.keyword" 
@@ -113,7 +113,7 @@ class App extends Component {
                         />
                     </div>
                     <div className='filter-card'>
-                        <MultiList 
+                        <SingleList 
                             componentId="filtroTitulo" 
                             dataField="title.keyword" 
                             title="Título" 
